@@ -1,0 +1,30 @@
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\bin\Debug\port demo.exe.config
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\bin\Debug\port demo.exe
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\bin\Debug\port demo.pdb
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port demo.csprojResolveAssemblyReference.cache
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port_demo.Form1.resources
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port_demo.Properties.Resources.resources
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port demo.csproj.GenerateResource.Cache
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port demo.exe
+c:\users\lenovo\onedrive\文档\visual studio 2013\Projects\port demo\port demo\obj\Debug\port demo.pdb
+D:\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.exe.config
+D:\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.exe
+D:\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.pdb
+E:\课题组\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.exe.config
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.exe
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.pdb
+E:\课题组\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.exe
+E:\课题组\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.pdb
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.csprojResolveAssemblyReference.cache
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Form1.resources
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Properties.Resources.resources
+E:\课题组\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.csproj.GenerateResource.Cache
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.exe.config
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.exe
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.pdb
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.exe
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\bin\Debug\port demo.pdb
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.csprojResolveAssemblyReference.cache
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Form1.resources
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Properties.Resources.resources
+C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.csproj.GenerateResource.Cache
