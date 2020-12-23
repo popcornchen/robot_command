@@ -39,7 +39,7 @@ namespace port_demo
         public int baudRate;
         public int dataBits;
         public int tag = 1;
-        public int sequence;
+        public int sequence = 0;
         public bool isOpen = false;
         public bool isHex = false;
         public bool SqlConnection = false;
@@ -366,57 +366,72 @@ namespace port_demo
                 sp.Open();
 
                 //读取数据
-                string sql = "SELECT Motion from robot_command where Sequence=" + sequence; //可能还要取速度加速度
+                //string sql = "SELECT Motion from robot_command where Sequence=" + sequence; //可能还要取速度加速度
+                string sql = "SELECT * from robot_command where robot_id='EpsonC4' and checked='0' order by id DESC limit 1";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
-                adapter.Fill(dt);
+                adapter.Fill(dt);                
 
                 //收发
                 if (isOpen == true)
                 {
                     try
                     {
-                        //根据取出的main函数生成通信指令
-                        int function = Convert.ToInt16(dt.Rows[0]["Motion"]);
-                        string command = commandseries(function);
-                        //textBox2.Text += command;
-                        //textBox2.Text += "\r\n"; //下面这两条测试用
-
-                        //发送
-                        textBox2.Text += command;
-                        textBox2.Text += "\r\n";
-                        Byte[] writeBytes = strToToHexByte(command.ToString());
-                        sp.Write(writeBytes, 0, writeBytes.Length);
-                        textBox2.Text += "指令发送成功";
-                        textBox2.Text += "\r\n";
-
-                        //接收
-                        Byte[] ReceivedData = new Byte[sp.BytesToRead];
-                        sp.Read(ReceivedData, 0, ReceivedData.Length);
-                        string RecvDataText = null;
-                        string s = string.Empty;
-                        for (int j = 0; j < ReceivedData.Length; j++)
+                        //判断是否有新指令传入
+                        if (sequence == Convert.ToInt16(dt.Rows[0]["id"]))
                         {
-                            RecvDataText += (ReceivedData[j].ToString("X2") + "");
-                            s += (char)ReceivedData[j]; //16进制转ASCLL码
+                            textBox2.Text += "指令尚未刷新";
+                            textBox2.Text += "\r\n";
+                            checkcode = 0;
                         }
-                        textBox1.Text += RecvDataText;
-                        textBox1.Text += "\r\n";
-                        RecvDataText = s;
+                        else
+                        {
+                            //根据取出的main函数生成通信指令
+                            int function = Convert.ToInt16(dt.Rows[0]["motion"]);
+                            string command = commandseries(function);
+                            //textBox2.Text += command;
+                            //textBox2.Text += "\r\n"; //下面这两条测试用
 
-                        //留出执行时间,此处login命令不在数据库中读取
-                        //if (dt.Rows[0]["Motion"].ToString() == "04" | dt.Rows[0]["Motion"].ToString() == "02 4C 03 4F") System.Threading.Thread.Sleep(20);
-                        //System.Threading.Thread.Sleep(7000);
+                            //发送
+                            textBox2.Text += command;
+                            textBox2.Text += "\r\n";
+                            Byte[] writeBytes = strToToHexByte(command.ToString());
+                            sp.Write(writeBytes, 0, writeBytes.Length);
+                            textBox2.Text += "指令发送成功";
+                            textBox2.Text += "\r\n";
 
-                        //发送完毕，重置
-                        checkcode = 0;
-                        sequence += 1;
+                            //接收
+                            Byte[] ReceivedData = new Byte[sp.BytesToRead];
+                            sp.Read(ReceivedData, 0, ReceivedData.Length);
+                            string RecvDataText = null;
+                            string s = string.Empty;
+                            for (int j = 0; j < ReceivedData.Length; j++)
+                            {
+                                RecvDataText += (ReceivedData[j].ToString("X2") + "");
+                                s += (char)ReceivedData[j]; //16进制转ASCLL码
+                            }
+                            textBox1.Text += RecvDataText;
+                            textBox1.Text += "\r\n";
+                            RecvDataText = s;
+
+                            //留出执行时间,此处login命令不在数据库中读取
+                            //if (dt.Rows[0]["Motion"].ToString() == "04" | dt.Rows[0]["Motion"].ToString() == "02 4C 03 4F") System.Threading.Thread.Sleep(20);
+                            //System.Threading.Thread.Sleep(7000);
+
+                            //发送完毕，重置校验码，更新数据库
+                            checkcode = 0;
+                            sequence = Convert.ToInt16(dt.Rows[0]["id"]);
+                            string check = "update robot_command set checked='1' where id='" + sequence + "'";
+                            MySqlCommand update = new MySqlCommand(check, conn);
+                            update.ExecuteNonQuery(); 
+                        }
+              
                     }
-                    catch (Exception) //监视一下sequence有没有问题
+                    catch (Exception e) //监视一下sequence有没有问题,修改数据库后sql语句不存在报错问题
                     {
                         //read_execute.Abort();
-                        textBox2.Text += "数据尚未更新";
+                        textBox2.Text += e;
                         textBox2.Text += "\r\n";
                         //System.Threading.Thread.Sleep(200);
                     }
@@ -430,7 +445,7 @@ namespace port_demo
             }
         }
 
-        //停止读取时更新monitor表中的起始位置
+        //停止读取时更新monitor表中的起始位置, 更新数据库后弃用，monitor监视数显器
         private void tag_update()
         {
             conn = new MySqlConnection(cloud_connect);
@@ -444,8 +459,8 @@ namespace port_demo
         private void button4_Click(object sender, EventArgs e)
         {
             //SendData();
-            tag = tag_monitor();
-            sequence = tag;
+            //tag = tag_monitor();
+            //sequence = tag;
             login();
             threadTimer = new System.Threading.Timer(new System.Threading.TimerCallback(SendData), null, 100, 6500);
             //CallWithTimeout(SendData, 60000);
@@ -457,7 +472,7 @@ namespace port_demo
             //Endtransmission = true;
             try { threadTimer.Dispose(); }
             catch { }
-            tag_update();
+            //tag_update();
             conn = new MySqlConnection(cloud_connect);
             conn.Close();
             sp = new SerialPort(portName, baudRate, parity, dataBits, stopbits);

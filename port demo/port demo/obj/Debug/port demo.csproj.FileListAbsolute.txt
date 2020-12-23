@@ -28,3 +28,6 @@ C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\
 C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Form1.resources
 C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port_demo.Properties.Resources.resources
 C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\obj\Debug\port demo.csproj.GenerateResource.Cache
+\\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\port demo.exe.config
+\\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.exe
+\\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.pdb
