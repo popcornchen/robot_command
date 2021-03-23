@@ -31,3 +31,22 @@ C:\Users\Robotmaster\Desktop\机器人云平台边缘开发\port demo\port demo\
 \\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\port demo.exe.config
 \\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.exe
 \\LAPTOP-17S8S2N9\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.pdb
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\port demo.exe.config
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.exe
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.pdb
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\port demo.exe
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\port demo.pdb
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\Mono.Security.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\Npgsql.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\Npgsql.pdb
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\Npgsql.xml
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\de\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\es\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\fi\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\fr\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\ja\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\bin\Debug\zh-CN\Npgsql.resources.dll
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.csprojResolveAssemblyReference.cache
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port_demo.Form1.resources
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port_demo.Properties.Resources.resources
+E:\Github\robot edge project\robot_command\port demo\port demo\obj\Debug\port demo.csproj.GenerateResource.Cache

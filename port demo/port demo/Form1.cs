@@ -15,6 +15,7 @@ using System.Timers;
 using MySql.Data.MySqlClient;
 using System.Net;
 using System.Net.Sockets;
+using Npgsql;
 
 namespace port_demo
 {
@@ -36,6 +37,7 @@ namespace port_demo
 
         public string portName;
         public string cloud_connect = "user=root; database=test; port=8332; pwd=gotmNAOL6^NcKJ9$; server=115.236.52.123";
+        public string cloud_connect_postgre = "Host=pg-backend.acbot.net; Port=2345; Username=hit; Password=gotmNAOL6^NcKJ9$; Database=robot_cloud";
         public int baudRate;
         public int dataBits;
         public int tag = 1;
@@ -43,13 +45,15 @@ namespace port_demo
         public bool isOpen = false;
         public bool isHex = false;
         public bool SqlConnection = false;
+        public bool NgsqlConnection = false;
         public bool Endtransmission = false;
         public byte checkcode = 0;
 
         SerialPort sp = new SerialPort();
         public StopBits stopbits;
         public Parity parity;
-        MySqlConnection conn;
+        //MySqlConnection conn;
+        NpgsqlConnection conn;
 
         public static Thread read_execute;
         System.Threading.Timer threadTimer = null;
@@ -247,11 +251,11 @@ namespace port_demo
         //监测每次重新打开应用程序后的执行起始位置
         public int tag_monitor()
         {
-            conn = new MySqlConnection(cloud_connect);
+            conn = new NpgsqlConnection(cloud_connect_postgre);
             conn.Open();
             string SQLstr = "Select StartPosition from robot_monitor";
-            MySqlCommand commission = new MySqlCommand(SQLstr, conn);
-            MySqlDataAdapter adapter = new MySqlDataAdapter(commission);
+            NpgsqlCommand commission = new NpgsqlCommand(SQLstr, conn);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(commission);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
             tag = Convert.ToInt16(dt.Rows[0]["StartPosition"]);
@@ -303,8 +307,8 @@ namespace port_demo
         }
 
         /*-----------------数据库通信模块--------------------*/
-        //数据库连接                     
-        private void button5_Click(object sender, EventArgs e)
+        //Mysql数据库连接                     
+        /*private void button5_Click(object sender, EventArgs e)
         {
             MySqlConnection conn = new MySqlConnection(cloud_connect);
             if (SqlConnection == false)
@@ -332,6 +336,37 @@ namespace port_demo
                 button5.Text = "连接数据库";
                 SqlConnection = false;
             }
+        }*/
+
+        //Postgresql数据库连接                     
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var conn = new NpgsqlConnection(cloud_connect_postgre);
+            if (NgsqlConnection == false)
+            {
+                try
+                {
+                    conn.Open();
+                    textBox2.Text += "数据库已连接";
+                    textBox2.Text += "\r\n";
+                    button5.Text = "断开数据库";
+                    NgsqlConnection = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("连接出错" + ex.ToString());
+                    NgsqlConnection = false;
+                }
+
+            }
+            else
+            {
+                conn.Close();
+                textBox2.Text += "数据库已断开";
+                textBox2.Text += "\r\n";
+                button5.Text = "连接数据库";
+                NgsqlConnection = false;
+            }
         }
 
         //机器人登录
@@ -356,7 +391,7 @@ namespace port_demo
             lock(lockThis)
             {
                 CheckForIllegalCrossThreadCalls = false;  //让线程的命令可以访问主线程form控件
-                conn = new MySqlConnection(cloud_connect);
+                var conn = new NpgsqlConnection(cloud_connect_postgre);
                 SerialPort sp = new SerialPort(portName, baudRate, parity, dataBits, stopbits);
                 Endtransmission = false;                                              
 
@@ -368,8 +403,8 @@ namespace port_demo
                 //读取数据
                 //string sql = "SELECT Motion from robot_command where Sequence=" + sequence; //可能还要取速度加速度
                 string sql = "SELECT * from robot_command where robot_id='EpsonC4' and checked='0' order by id DESC limit 1";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+                NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);                
 
@@ -423,7 +458,7 @@ namespace port_demo
                             checkcode = 0;
                             sequence = Convert.ToInt16(dt.Rows[0]["id"]);
                             string check = "update robot_command set checked='1' where id='" + sequence + "'";
-                            MySqlCommand update = new MySqlCommand(check, conn);
+                            NpgsqlCommand update = new NpgsqlCommand(check, conn);
                             update.ExecuteNonQuery(); 
                         }
               
@@ -448,10 +483,10 @@ namespace port_demo
         //停止读取时更新monitor表中的起始位置, 更新数据库后弃用，monitor监视数显器
         private void tag_update()
         {
-            conn = new MySqlConnection(cloud_connect);
+            conn = new NpgsqlConnection(cloud_connect_postgre);
             conn.Open();
             string ChangeTag = "Update robot_monitor set StartPosition=" + (sequence-1) + " where line=0";
-            MySqlCommand update = new MySqlCommand(ChangeTag, conn);
+            NpgsqlCommand update = new NpgsqlCommand(ChangeTag, conn);
             update.ExecuteNonQuery(); 
         }
         
@@ -473,7 +508,7 @@ namespace port_demo
             try { threadTimer.Dispose(); }
             catch { }
             //tag_update();
-            conn = new MySqlConnection(cloud_connect);
+            conn = new NpgsqlConnection(cloud_connect_postgre);
             conn.Close();
             sp = new SerialPort(portName, baudRate, parity, dataBits, stopbits);
             sp.Close();
